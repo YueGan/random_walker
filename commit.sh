@@ -40,7 +40,7 @@ Commit () {
 
     #git rm -r --cached .
     git add *
-    git commit -m "hasjd"
+    git commit -m "$arg2"
     git push
 }
 
