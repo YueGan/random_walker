@@ -2,7 +2,7 @@
 
 FILES="./*"
 
-arg2=*
+arg2="$1"
 
 LoopFiles () {
 
