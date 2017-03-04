@@ -70,6 +70,8 @@ def main():
         else:
             newgame.set_states(-1)
 
+    print("end")
+
 
 if __name__ == "__main__":
 
