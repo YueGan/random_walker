@@ -2,6 +2,7 @@ from Tkinter import *
 from scipy.stats import bernoulli
 import time
 import math
+import datetime
 
 
 class State():
@@ -45,30 +46,75 @@ class State():
 
 
 
+
 def GUI():
+
+    newAnimation = State()
+
     # blank window
     root = Tk()
 
     frame = Frame(root, height=400, width=600)
-
     frame.pack()
+
+    labelCurState = Label()
+    labelCurState.pack()
+    labelPrevOneState = Label()
+    labelPrevOneState.pack()
+    labelPrevTwoState = Label()
+    labelPrevTwoState.pack()
+    labelTimeElapsed = Label()
+    labelTimeElapsed.pack()
+    labelProbability = Label()
+    labelProbability.pack()
+
+    def clock():
+
+        # Bernoulli probability
+        if bernoulli.rvs(newAnimation.get_probability()):
+            newAnimation.set_states(1)
+        else:
+            newAnimation.set_states(-1)
+
+        # Fetch current states, time, and probability
+        currentState = newAnimation.get_states()[0]
+        prevOneState = newAnimation.get_states()[1]
+        prevTwoState = newAnimation.get_states()[2]
+        timeElapsed = newAnimation.get_time_elapse()
+        probability = newAnimation.get_probability()
+
+        # Update current states
+        labelCurState.config(text=currentState)
+        labelPrevOneState.config(text=prevOneState)
+        labelPrevTwoState.config(text=prevTwoState)
+        labelTimeElapsed.config(text=timeElapsed)
+        labelProbability.config(text=probability)
+
+        root.after(1000, clock)
+
+    clock()
+
+    # canvas = Canvas()
+    # canvas.create_line(15, 25, 200, 25)
+    # canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray", width=2)
+    # canvas.pack(fill=BOTH, expand=1)
     root.mainloop()
 
 def main():
 
-    #GUI()
-
-    newgame = State()
-
-    while True:
-        time.sleep(newgame.get_time_elapse())
-
-        print(newgame.get_states())
-
-        if bernoulli.rvs(newgame.get_probability()):
-            newgame.set_states(1)
-        else:
-            newgame.set_states(-1)
+    GUI()
+    #
+    # newgame = State()
+    #
+    # while True:
+    #     time.sleep(newgame.get_time_elapse())
+    #
+    #     print(newgame.get_states())
+    #
+    #     if bernoulli.rvs(newgame.get_probability()):
+    #         newgame.set_states(1)
+    #     else:
+    #         newgame.set_states(-1)
 
     print("end")
 
