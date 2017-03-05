@@ -30,9 +30,9 @@ class State():
 
         return self.TIME_ELAPSE
 
-    def set_time_elapse(self, power):
+    def set_time_elapse(self):
 
-        self.TIME_ELAPSE/(math.pow(2, power))
+        self.TIME_ELAPSE += 1
 
     def get_probability(self):
 
@@ -43,30 +43,34 @@ class State():
         self.PROBABILITY = newprob
 
 
-
-
-
-
 def GUI():
 
     newAnimation = State()
 
     # blank window
     root = Tk()
+    root.grid()
+    root.title("1D Random Walker")
 
-    frame = Frame(root, height=400, width=600)
-    frame.pack()
+    frameAnimation = Frame(root, height=400, width=400, bg="blue")
+    frameText = Frame(root, height=400, width=200, bg="red")
+    frameAnimation.pack(side=LEFT)
+    frameText.pack(side=RIGHT)
 
-    labelCurState = Label(root)
-    labelCurState.pack(side=RIGHT)
-    labelPrevOneState = Label(root)
-    labelPrevOneState.pack(side=RIGHT)
-    labelPrevTwoState = Label(root)
-    labelPrevTwoState.pack(side=RIGHT)
-    labelTimeElapsed = Label(root)
-    labelTimeElapsed.pack(side=RIGHT)
-    labelProbability = Label(root)
-    labelProbability.pack(side=RIGHT)
+    labelCurState = Label(frameText)
+    labelCurState.pack(side=TOP)
+    labelPrevOneState = Label(frameText)
+    labelPrevOneState.pack(side=TOP)
+    labelPrevTwoState = Label(frameText)
+    labelPrevTwoState.pack(side=TOP)
+    labelTimeElapsed = Label(frameText)
+    labelTimeElapsed.pack(side=TOP)
+    labelProbability = Label(frameText)
+    labelProbability.pack(side=TOP)
+
+    canvas = Canvas()
+    oval = canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray")
+    canvas.pack()
 
     def clock():
 
@@ -75,6 +79,8 @@ def GUI():
             newAnimation.set_states(1)
         else:
             newAnimation.set_states(-1)
+
+        newAnimation.set_time_elapse()
 
         # Fetch current states, time, and probability
         currentState = "Current State: " + str(newAnimation.get_states()[0])
@@ -89,13 +95,13 @@ def GUI():
         labelPrevTwoState.config(text=prevTwoState)
         labelTimeElapsed.config(text=timeElapsed)
         labelProbability.config(text=probability)
+        canvas.place(relx=1, x=newAnimation.get_states()[0], y=2, anchor=NE)
 
-        root.after(1000, clock)
+        root.after(100, clock)
 
     clock()
 
     # canvas = Canvas()
-    # canvas.create_line(15, 25, 200, 25)
     # canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray", width=2)
     # canvas.pack(fill=BOTH, expand=1)
     root.mainloop()
@@ -103,6 +109,7 @@ def GUI():
 def main():
 
     GUI()
+
     #
     # newgame = State()
     #
