@@ -58,19 +58,19 @@ def GUI():
     frameText.pack(side=RIGHT)
 
     labelCurState = Label(frameText)
-    labelCurState.pack(side=TOP)
+    labelCurState.pack()
     labelPrevOneState = Label(frameText)
-    labelPrevOneState.pack(side=TOP)
+    labelPrevOneState.pack()
     labelPrevTwoState = Label(frameText)
-    labelPrevTwoState.pack(side=TOP)
+    labelPrevTwoState.pack()
     labelTimeElapsed = Label(frameText)
-    labelTimeElapsed.pack(side=TOP)
+    labelTimeElapsed.pack()
     labelProbability = Label(frameText)
-    labelProbability.pack(side=TOP)
+    labelProbability.pack()
 
-    canvas = Canvas()
-    oval = canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray")
-    canvas.pack()
+    canvas = Canvas(frameAnimation, bg="yellow")
+    canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray")
+    canvas.pack(side=TOP, fill="both", expand=True)
 
     def clock():
 
@@ -95,7 +95,7 @@ def GUI():
         labelPrevTwoState.config(text=prevTwoState)
         labelTimeElapsed.config(text=timeElapsed)
         labelProbability.config(text=probability)
-        canvas.place(relx=1, x=newAnimation.get_states()[0], y=2, anchor=NE)
+        canvas.place(relx=1, x=newAnimation.get_states()[0], y=newAnimation.get_states()[0], anchor=NE)
 
         root.after(100, clock)
 
