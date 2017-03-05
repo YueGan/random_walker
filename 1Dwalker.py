@@ -57,16 +57,16 @@ def GUI():
     frame = Frame(root, height=400, width=600)
     frame.pack()
 
-    labelCurState = Label()
-    labelCurState.pack()
-    labelPrevOneState = Label()
-    labelPrevOneState.pack()
-    labelPrevTwoState = Label()
-    labelPrevTwoState.pack()
-    labelTimeElapsed = Label()
-    labelTimeElapsed.pack()
-    labelProbability = Label()
-    labelProbability.pack()
+    labelCurState = Label(root)
+    labelCurState.pack(side=RIGHT)
+    labelPrevOneState = Label(root)
+    labelPrevOneState.pack(side=RIGHT)
+    labelPrevTwoState = Label(root)
+    labelPrevTwoState.pack(side=RIGHT)
+    labelTimeElapsed = Label(root)
+    labelTimeElapsed.pack(side=RIGHT)
+    labelProbability = Label(root)
+    labelProbability.pack(side=RIGHT)
 
     def clock():
 
@@ -77,11 +77,11 @@ def GUI():
             newAnimation.set_states(-1)
 
         # Fetch current states, time, and probability
-        currentState = newAnimation.get_states()[0]
-        prevOneState = newAnimation.get_states()[1]
-        prevTwoState = newAnimation.get_states()[2]
-        timeElapsed = newAnimation.get_time_elapse()
-        probability = newAnimation.get_probability()
+        currentState = "Current State: " + str(newAnimation.get_states()[0])
+        prevOneState = "Previous 1 State: " + str(newAnimation.get_states()[1])
+        prevTwoState = "Previous 2 State: " + str(newAnimation.get_states()[2])
+        timeElapsed = "Time: " + str(newAnimation.get_time_elapse())
+        probability = "Probability: " + str(newAnimation.get_probability())
 
         # Update current states
         labelCurState.config(text=currentState)
