@@ -95,7 +95,7 @@ def GUI():
         labelPrevTwoState.config(text=prevTwoState)
         labelTimeElapsed.config(text=timeElapsed)
         labelProbability.config(text=probability)
-        canvas.place(relx=1, x=newAnimation.get_states()[0], y=newAnimation.get_states()[0], anchor=NE)
+        canvas.place(relx=1, x=newAnimation.get_states()[0], y=1, anchor=NE)
 
         root.after(100, clock)
 
