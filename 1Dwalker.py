@@ -8,12 +8,14 @@ import datetime
 class State():
 
     def __init__(self):
-        self.CURRENT_STATE = 0
+        self.CURRENT_STATE = 50
         self.TIME_ELAPSE = 1
         self.PROBABILITY = 0.5
-        self.LAST_ONE_STATE = 0
-        self.LAST_TWO_STATE = 0
+        self.LAST_ONE_STATE = 50
+        self.LAST_TWO_STATE = 50
         self.DIST_FROM_ORIGIN = 0
+        self.WIN = 100
+        self.LOSE = 0
 
     def get_states(self):
 
@@ -42,6 +44,10 @@ class State():
 
         self.PROBABILITY = newprob
 
+    def win_or_lose(self):
+
+        return self.CURRENT_STATE == self.WIN or self.CURRENT_STATE == self.LOSE
+
 
 def GUI():
 
@@ -52,8 +58,10 @@ def GUI():
     root.title("1D Random Walker")
     root.resizable(width=False, height=False)
 
-    frameAnimation = Frame(root, height=400, width=400)
-    frameText = Frame(root, height=400, width=600, bg='red')
+    frameAnimation = Frame(root, height=400, width=400, bg='blue')
+    frameAnimation.pack_propagate(0)
+    frameText = Frame(root, height=400, width=200, bg='red')
+    #Do not let children control the size of windows
     frameText.pack_propagate(0)
     frameAnimation.pack(side=LEFT, fill=BOTH)
     frameText.pack(side=RIGHT, fill=BOTH)
@@ -70,7 +78,7 @@ def GUI():
     labelProbability.pack()
 
 
-    canvas = Canvas(frameAnimation, height=200, width=200)
+    canvas = Canvas(frameAnimation, height=80, width=80)
     canvas.create_oval(10, 10, 80, 80, outline="black", fill="black")
     canvas.pack(fill=BOTH, expand=True)
     canvas.place(relx=1, x=newAnimation.get_states()[0], y=1, anchor=CENTER)
@@ -99,9 +107,12 @@ def GUI():
         labelPrevTwoState.config(text=prevTwoState)
         labelTimeElapsed.config(text=timeElapsed)
         labelProbability.config(text=probability)
-        canvas.place(relx = 0.5, rely = 0.5, x=0, y=0, anchor=NE)
+        canvas.place(relx = 0.5, rely = 0.5, x=0 + newAnimation.get_states()[0], y=0, anchor=SE)
 
-        root.after(100, clock)
+        if(newAnimation.win_or_lose() == False):
+            root.after(100, clock)
+        else:
+            return 0
 
     clock()
 
