@@ -49,13 +49,14 @@ def GUI():
 
     # blank window
     root = Tk()
-    root.grid()
     root.title("1D Random Walker")
+    root.resizable(width=False, height=False)
 
-    frameAnimation = Frame(root, height=400, width=400, bg="blue")
-    frameText = Frame(root, height=400, width=200, bg="red")
-    frameAnimation.pack(side=LEFT)
-    frameText.pack(side=RIGHT)
+    frameAnimation = Frame(root, height=400, width=400)
+    frameText = Frame(root, height=400, width=600, bg='red')
+    frameText.pack_propagate(0)
+    frameAnimation.pack(side=LEFT, fill=BOTH)
+    frameText.pack(side=RIGHT, fill=BOTH)
 
     labelCurState = Label(frameText)
     labelCurState.pack()
@@ -68,9 +69,12 @@ def GUI():
     labelProbability = Label(frameText)
     labelProbability.pack()
 
-    canvas = Canvas(frameAnimation, bg="yellow")
-    canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray")
-    canvas.pack(side=TOP, fill="both", expand=True)
+
+    canvas = Canvas(frameAnimation, height=200, width=200)
+    canvas.create_oval(10, 10, 80, 80, outline="black", fill="black")
+    canvas.pack(fill=BOTH, expand=True)
+    canvas.place(relx=1, x=newAnimation.get_states()[0], y=1, anchor=CENTER)
+
 
     def clock():
 
@@ -95,15 +99,12 @@ def GUI():
         labelPrevTwoState.config(text=prevTwoState)
         labelTimeElapsed.config(text=timeElapsed)
         labelProbability.config(text=probability)
-        canvas.place(relx=1, x=newAnimation.get_states()[0], y=1, anchor=NE)
+        canvas.place(relx = 0.5, rely = 0.5, x=0, y=0, anchor=NE)
 
         root.after(100, clock)
 
     clock()
 
-    # canvas = Canvas()
-    # canvas.create_oval(10, 10, 80, 80, outline="gray", fill="gray", width=2)
-    # canvas.pack(fill=BOTH, expand=1)
     root.mainloop()
 
 def main():
